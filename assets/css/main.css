@@ -2589,6 +2589,9 @@ input, select, textarea {
 
 			ul.icons li .icon {
 				font-size: 0.8em;
+                display: inline-block; /* Helps with alignment and sizing */
+                width: auto; /* Adjust based on your layout */
+                height: auto; /* Adjust based on your layout */
 			}
 
 				ul.icons li .icon:before {
