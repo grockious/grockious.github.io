@@ -689,6 +689,25 @@
                         mouse.y = -1000;
                     });
                     
+                    // Fixed anchor particles at corners and midpoints
+                    var margin = 10;
+                    var anchors = [
+                        {x: margin, y: margin},
+                        {x: canvas.width - margin, y: margin},
+                        {x: margin, y: canvas.height - margin},
+                        {x: canvas.width - margin, y: canvas.height - margin},
+                        {x: canvas.width / 2, y: margin},
+                        {x: canvas.width / 2, y: canvas.height - margin},
+                        {x: margin, y: canvas.height / 2},
+                        {x: canvas.width - margin, y: canvas.height / 2}
+                    ];
+                    for (var a = 0; a < anchors.length; a++) {
+                        particles.push({
+                            x: anchors[a].x, y: anchors[a].y,
+                            vx: 0, vy: 0, r: 1.2, fixed: true
+                        });
+                    }
+                    
                     // Distribute particles on a grid with jitter for uniform coverage
                     var cols = Math.ceil(Math.sqrt(numParticles * (canvas.width / canvas.height)));
                     var rows = Math.ceil(numParticles / cols);
@@ -713,10 +732,12 @@
                         
                         for (var i = 0; i < particles.length; i++) {
                             var p = particles[i];
-                            p.x += p.vx;
-                            p.y += p.vy;
-                            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            if (!p.fixed) {
+                                p.x += p.vx;
+                                p.y += p.vy;
+                                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            }
                             
                             // Draw dot
                             ctx.beginPath();
@@ -751,17 +772,21 @@
                                 ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.25 * (1 - mDist / 180)) + ')';
                                 ctx.lineWidth = 0.8;
                                 ctx.stroke();
-                                // Gentle push
-                                var force = (180 - mDist) / 180 * 0.02;
-                                p.vx += (mdx / mDist) * force;
-                                p.vy += (mdy / mDist) * force;
+                                if (!p.fixed) {
+                                    // Gentle push
+                                    var force = (180 - mDist) / 180 * 0.02;
+                                    p.vx += (mdx / mDist) * force;
+                                    p.vy += (mdy / mDist) * force;
+                                }
                             }
                             
                             // Clamp velocity
-                            var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                            if (speed > 0.15) {
-                                p.vx = (p.vx / speed) * 0.15;
-                                p.vy = (p.vy / speed) * 0.15;
+                            if (!p.fixed) {
+                                var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                                if (speed > 0.15) {
+                                    p.vx = (p.vx / speed) * 0.15;
+                                    p.vy = (p.vy / speed) * 0.15;
+                                }
                             }
                         }
                         requestAnimationFrame(animate);
@@ -887,6 +912,26 @@
                     resizeBokeh();
                     window.addEventListener('resize', resizeBokeh);
                     
+                    // Fixed anchor bokeh at corners and midpoints
+                    var bMargin = 30;
+                    var bokehAnchors = [
+                        {x: bMargin, y: bMargin},
+                        {x: canvas.width - bMargin, y: bMargin},
+                        {x: bMargin, y: canvas.height - bMargin},
+                        {x: canvas.width - bMargin, y: canvas.height - bMargin},
+                        {x: canvas.width / 2, y: bMargin},
+                        {x: canvas.width / 2, y: canvas.height - bMargin},
+                        {x: bMargin, y: canvas.height / 2},
+                        {x: canvas.width - bMargin, y: canvas.height / 2}
+                    ];
+                    for (var a = 0; a < bokehAnchors.length; a++) {
+                        bokehParticles.push({
+                            x: bokehAnchors[a].x, y: bokehAnchors[a].y,
+                            r: 30, vx: 0, vy: 0,
+                            opacity: 0.03, phase: Math.random() * Math.PI * 2, fixed: true
+                        });
+                    }
+                    
                     for (var i = 0; i < numBokeh; i++) {
                         bokehParticles.push({
                             x: Math.random() * canvas.width,
@@ -907,10 +952,12 @@
                         
                         for (var i = 0; i < bokehParticles.length; i++) {
                             var b = bokehParticles[i];
-                            b.x += b.vx;
-                            b.y += b.vy;
-                            if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
-                            if (b.y < 0 || b.y > canvas.height) b.vy *= -1;
+                            if (!b.fixed) {
+                                b.x += b.vx;
+                                b.y += b.vy;
+                                if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
+                                if (b.y < 0 || b.y > canvas.height) b.vy *= -1;
+                            }
                             
                             // Bokeh connecting lines (blurred)
                             ctx.save();
@@ -979,6 +1026,25 @@
                         mouse.y = -1000;
                     });
                     
+                    // Fixed anchor particles at corners and midpoints
+                    var fMargin = 10;
+                    var fAnchors = [
+                        {x: fMargin, y: fMargin},
+                        {x: canvas.width - fMargin, y: fMargin},
+                        {x: fMargin, y: canvas.height - fMargin},
+                        {x: canvas.width - fMargin, y: canvas.height - fMargin},
+                        {x: canvas.width / 2, y: fMargin},
+                        {x: canvas.width / 2, y: canvas.height - fMargin},
+                        {x: fMargin, y: canvas.height / 2},
+                        {x: canvas.width - fMargin, y: canvas.height / 2}
+                    ];
+                    for (var a = 0; a < fAnchors.length; a++) {
+                        particles.push({
+                            x: fAnchors[a].x, y: fAnchors[a].y,
+                            vx: 0, vy: 0, r: 1.2, fixed: true
+                        });
+                    }
+                    
                     // Grid-based uniform distribution
                     var cols = Math.ceil(Math.sqrt(numParticles * (canvas.width / (canvas.height || 1))));
                     var rows = Math.ceil(numParticles / cols);
@@ -1003,10 +1069,12 @@
                         
                         for (var i = 0; i < particles.length; i++) {
                             var p = particles[i];
-                            p.x += p.vx;
-                            p.y += p.vy;
-                            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            if (!p.fixed) {
+                                p.x += p.vx;
+                                p.y += p.vy;
+                                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            }
                             
                             ctx.beginPath();
                             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -1038,15 +1106,19 @@
                                 ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.25 * (1 - mDist / 180)) + ')';
                                 ctx.lineWidth = 0.8;
                                 ctx.stroke();
-                                var force = (180 - mDist) / 180 * 0.02;
-                                p.vx += (mdx / mDist) * force;
-                                p.vy += (mdy / mDist) * force;
+                                if (!p.fixed) {
+                                    var force = (180 - mDist) / 180 * 0.02;
+                                    p.vx += (mdx / mDist) * force;
+                                    p.vy += (mdy / mDist) * force;
+                                }
                             }
                             
-                            var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                            if (speed > 0.15) {
-                                p.vx = (p.vx / speed) * 0.15;
-                                p.vy = (p.vy / speed) * 0.15;
+                            if (!p.fixed) {
+                                var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                                if (speed > 0.15) {
+                                    p.vx = (p.vx / speed) * 0.15;
+                                    p.vy = (p.vy / speed) * 0.15;
+                                }
                             }
                         }
                         requestAnimationFrame(animateFooter);
