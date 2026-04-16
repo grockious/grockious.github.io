@@ -110,7 +110,7 @@
 						<li>Copyright &copy; Hosein Hasanbeig, <script>new Date().getFullYear()>2017&&document.write(new Date().getFullYear());</script></li>
 					</ul>
 					<div class="visitor-map">
-						<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=1c1d26&w=200&t=tt&d=AEByewPTFvsEjwMIOlEYi_Ur4POj3kB3qSy_aNEbZJ4&co=1c1d26&cmo=C9B861&cmn=C9B861&ct=666666'></script>
+						<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=0d0b10&w=200&t=tt&d=AEByewPTFvsEjwMIOlEYi_Ur4POj3kB3qSy_aNEbZJ4&co=272833&cmo=C9B861&cmn=C9B861&ct=666666'></script>
 					</div>
 				</footer>
         </div>
@@ -899,6 +899,8 @@
                         });
                     }
                     
+                    var bokehConnectionDist = 200;
+                    
                     function animateBokeh() {
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         var time = Date.now() * 0.001;
@@ -909,6 +911,27 @@
                             b.y += b.vy;
                             if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
                             if (b.y < 0 || b.y > canvas.height) b.vy *= -1;
+                            
+                            // Bokeh connecting lines (blurred)
+                            ctx.save();
+                            ctx.filter = 'blur(4px)';
+                            for (var j = i + 1; j < bokehParticles.length; j++) {
+                                var b2 = bokehParticles[j];
+                                var dx = b.x - b2.x;
+                                var dy = b.y - b2.y;
+                                var dist = Math.sqrt(dx * dx + dy * dy);
+                                if (dist < bokehConnectionDist) {
+                                    var avgPulse = (b.opacity + b2.opacity) / 2 + Math.sin(time * 0.8 + (b.phase + b2.phase) / 2) * 0.015;
+                                    var lineAlpha = avgPulse * (1 - dist / bokehConnectionDist) * 0.8;
+                                    ctx.beginPath();
+                                    ctx.moveTo(b.x, b.y);
+                                    ctx.lineTo(b2.x, b2.y);
+                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + lineAlpha + ')';
+                                    ctx.lineWidth = 3;
+                                    ctx.stroke();
+                                }
+                            }
+                            ctx.restore();
                             
                             // Pulsing opacity
                             var pulse = b.opacity + Math.sin(time * 0.8 + b.phase) * 0.015;
@@ -935,7 +958,7 @@
                     var ctx = canvas.getContext('2d');
                     var footer = document.getElementById('footer');
                     var particles = [];
-                    var numParticles = 40;
+                    var numParticles = 20;
                     var connectionDist = 220;
                     var mouse = { x: -1000, y: -1000 };
                     
