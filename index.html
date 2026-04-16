@@ -12,24 +12,13 @@
 		<link href="assets/css/all.css" rel="stylesheet">
 		<link href="assets/css/main.css" rel="stylesheet">
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<!-- MathJax -->
-		<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({
-		  jax: ["input/TeX", "output/HTML-CSS"],
-		  extensions: ["tex2jax.js"],
-		  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
-		  tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
-		  TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } } },
-		  messageStyle: "none"
-		});
-		</script>
-		<!-- Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138341844-1"></script>
+		<!-- Google Analytics (GA4) — replace G-XXXXXXXXXX with your GA4 measurement ID -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 		<script>
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
-		  gtag('config', 'UA-138341844-1');
+		  gtag('config', 'G-XXXXXXXXXX');
 		</script>
 	</head>
     
@@ -38,45 +27,30 @@
 
 			<!-- banner -->
             <section id="banner">
+                <canvas id="particle-canvas"></canvas>
                 <div class="content">
-                <center><h2 class="fade-in">Hosein Hasanbeig</h2></center>
+                <h2 class="fade-in" style="text-align: center;">Hosein Hasanbeig</h2>
                 <br>
                 <br>
                     <div class="row fade-in">
-                        <div class="col-4 col-12-xsmall">
-                            <center>
-                                <header>
-                                    <img src="images/profile_pic.jpg" alt="" style='height: 85%; width: 85%; object-fit: contain; border-radius: 12px;' />
-                                </header>
-                            </center>
+                        <div class="col-4 col-12-xsmall" style="text-align: center;">
+                            <div class="tilt-wrap">
+                            <img src="images/profile_pic.jpg" alt="Hosein Hasanbeig" style='height: 85%; width: 85%; object-fit: contain; border-radius: 12px;' />
+                            </div>
                         </div>
-                        <div class="col-4 col-12-xsmall">
-                            <center>
-                                <header align="justify">
-                                    <p><h4>Short Bio:</h4></p>
-                                    <p align=”justify”><h4>
-                                    I am currently a researcher at Microsoft. I completed my Ph.D. in 2020 in the Computer Science Department of the University of Oxford, under the supervision of Alessandro Abate and Daniel Kroening. I was also a lecturer at St Catherine's College, University of Oxford, teaching Computer-aided Formal Verification from 2018 to 2022. Prior to Oxford, I was a research assistant in the Systems Control Lab at the University of
-                                    </h4></p>
-                                </header>
-                            </center>
-                        </div>
-                        <div class="col-4 col-12-xsmall">
-                            <center>
-                                <header align="justify">
-                                    <p><h4> </h4></p><br>
-                                    <p align=”justify”><h4>
-                                    Toronto, where I received my M.Sc. in Electrical and Computer Engineering in 2016. My research sits at the intersection of reinforcement learning, formal methods, language models, and cognitive science, with an emphasis on building models and methods that are explainable and reliable in practice.
-                                    </h4></p>
-                                </header>
-                            <ul class="icons">
+                        <div class="col-8 col-12-xsmall">
+                            <p style="text-align: left;"><strong>Short Bio:</strong></p>
+                            <p style="text-align: justify;">
+                            I am currently a researcher at Microsoft. I completed my Ph.D. in 2020 in the Computer Science Department of the University of Oxford, under the supervision of Alessandro Abate and Daniel Kroening. I was also a lecturer at St Catherine's College, University of Oxford, teaching Computer-aided Formal Verification from 2018 to 2022. Prior to Oxford, I was a research assistant in the Systems Control Lab at the University of Toronto, where I received my M.Sc. in Electrical and Computer Engineering in 2016. My research sits at the intersection of reinforcement learning, formal methods, language models, and cognitive science, with an emphasis on building models and methods that are explainable and reliable in practice.
+                            </p>
+                            <ul class="icons" style="text-align: center;">
                             <li><a href="https://www.github.com/grockious" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
                             <li><a href="https://www.linkedin.com/in/grockious" target="_blank" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                            <li><a href="https://x.com/grockious" target="_blank" class="icon fa-times"><span class="label">X</span></a></li>
+                            <li><a href="https://x.com/grockious" target="_blank" class="icon x-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg><span class="label">X</span></a></li>
                             <li><a href="https://scholar.google.com/citations?user=y0w3o24AAAAJ&hl=en" target="_blank" id="scholar-icon" class="icon fa-graduation-cap"><span class="label">GoogleScholar</span></a></li>
                             <br>
                             <li><a class="icon fa-envelope"><span class="label">eMail</span></a>&nbsp;&nbsp;&nbsp; firstname.lastname@icloud.com</li>
                         </ul>
-                        </center>
                         </div>
                     </div>
                 </div>
@@ -85,6 +59,7 @@
 
 			<!-- Misc -->
 			<div id="misc" class="wrapper style1">
+				<canvas id="bokeh-canvas"></canvas>
 				<div class="container">
 					<header class="major fade-in">
 						<h2>Beyond Work</h2>
@@ -94,6 +69,7 @@
 						<div class="cards-container">
 							<!-- Photography Card -->
 							<div class="apple-card fade-in" data-bg="assets/images/photography-bg.jpg">
+								<div class="card-shine"></div>
 								<div class="card-bg"></div>
 								<div class="card-overlay"></div>
 								<div class="card-content">
@@ -111,6 +87,7 @@
 							</div>
 							<!-- Art Card -->
 							<div class="apple-card fade-in" data-bg="assets/images/sketching-bg.jpg">
+								<div class="card-shine"></div>
 								<div class="card-bg"></div>
 								<div class="card-overlay"></div>
 								<div class="card-content">
@@ -128,11 +105,12 @@
 
 			<!-- Footer -->
 				<footer id="footer">
+					<canvas id="footer-particle-canvas"></canvas>
 					<ul class="copyright">
 						<li>Copyright &copy; Hosein Hasanbeig, <script>new Date().getFullYear()>2017&&document.write(new Date().getFullYear());</script></li>
 					</ul>
 					<div class="visitor-map">
-						<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=1c1d26&w=200&t=tt&d=AEByewPTFvsEjwMIOlEYi_Ur4POj3kB3qSy_aNEbZJ4&co=272833&cmo=C9B861&cmn=C9B861&ct=666666'></script>
+						<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=1c1d26&w=200&t=tt&d=AEByewPTFvsEjwMIOlEYi_Ur4POj3kB3qSy_aNEbZJ4&co=#1c1d26&cmo=C9B861&cmn=C9B861&ct=666666'></script>
 					</div>
 				</footer>
         </div>
@@ -269,22 +247,23 @@
                 background: rgba(255, 255, 255, 0.02);
                 border-radius: 24px;
                 overflow: hidden;
-                transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transition: transform 0.15s ease-out, box-shadow 0.5s ease;
                 position: relative;
                 min-height: 320px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+                transform-style: preserve-3d;
             }
             
             .apple-card:hover {
-                transform: scale(1.02) translateY(-4px);
                 box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             }
             
             .apple-card .card-bg {
                 position: absolute;
-                top: -10%;
+                top: -30%;
                 left: 0;
                 width: 100%;
-                height: 120%;
+                height: 160%;
                 background-size: cover;
                 background-position: center;
                 transition: transform 0.1s ease-out;
@@ -463,6 +442,141 @@
             html {
                 scroll-behavior: smooth;
             }
+            
+            /* Particle canvas */
+            #particle-canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                pointer-events: none;
+            }
+            #banner {
+                position: relative;
+            }
+            #banner .content {
+                position: relative;
+                z-index: 2;
+            }
+            
+            /* 3D tilt on profile image */
+            .tilt-wrap {
+                display: inline-block;
+                perspective: 800px;
+                cursor: default;
+            }
+            .tilt-wrap img {
+                transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+                will-change: transform;
+            }
+            .tilt-wrap:hover img {
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(201, 184, 97, 0.15);
+            }
+            
+            /* 3D tilt on cards */
+            .apple-card {
+                perspective: 900px;
+            }
+            .apple-card .card-inner {
+                transition: transform 0.15s ease-out;
+                will-change: transform;
+                transform-style: preserve-3d;
+            }
+            .apple-card .card-shine {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 3;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                border-radius: 24px;
+                background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%);
+            }
+            .apple-card:hover .card-shine {
+                opacity: 1;
+            }
+            
+            /* X logo icon */
+            .x-logo::before {
+                display: none;
+            }
+            
+            /* Goto-next glow animation */
+            @keyframes arrow-glow {
+                0%, 100% {
+                    filter: drop-shadow(0 0 4px rgba(201, 184, 97, 0.4));
+                }
+                50% {
+                    filter: drop-shadow(0 0 14px rgba(201, 184, 97, 0.9)) drop-shadow(0 0 30px rgba(201, 184, 97, 0.4));
+                }
+            }
+            .goto-next.glowing::before {
+                animation: arrow-glow 2s ease-in-out infinite;
+            }
+            .goto-next.glowing {
+                z-index: 3;
+            }
+            
+            /* Bokeh canvas */
+            #misc {
+                position: relative;
+                overflow: hidden;
+            }
+            #bokeh-canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                pointer-events: none;
+            }
+            #misc .container {
+                position: relative;
+                z-index: 1;
+            }
+            
+            /* Footer particle canvas */
+            #footer {
+                position: relative;
+                overflow: hidden;
+            }
+            #footer-particle-canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                pointer-events: none;
+            }
+            #footer .copyright,
+            #footer .visitor-map {
+                position: relative;
+                z-index: 1;
+            }
+            .x-logo svg {
+                width: 1.45em;
+                height: 1.45em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+            }
+            
+            /* Mobile bio layout */
+            @media screen and (max-width: 480px) {
+                #banner .col-8 {
+                    text-align: center;
+                    margin-top: 2rem;
+                }
+                #banner .col-8 p[style] {
+                    text-align: justify;
+                }
+            }
         </style>
         
         <!-- Scroll-triggered animations -->
@@ -523,10 +637,10 @@
                         const viewportCenter = windowHeight / 2;
                         const distance = cardCenter - viewportCenter;
                         
-                        // Calculate parallax offset (-30% to 10% range for pronounced effect)
-                        const maxOffset = 40;
+                        // Calculate parallax offset (-30% to 0% range for pronounced effect)
+                        const maxOffset = 30;
                         const offset = (distance / windowHeight) * maxOffset;
-                        const clampedOffset = Math.max(-30, Math.min(10, -10 + offset));
+                        const clampedOffset = Math.max(-30, Math.min(0, -15 + offset));
                         
                         bgDiv.style.top = clampedOffset + '%';
                     });
@@ -546,6 +660,376 @@
                 
                 // Initial call
                 updateParallax();
+                
+                // ===== PARTICLE CONSTELLATION =====
+                (function() {
+                    var canvas = document.getElementById('particle-canvas');
+                    if (!canvas) return;
+                    var ctx = canvas.getContext('2d');
+                    var particles = [];
+                    var numParticles = 60;
+                    var connectionDist = 320;
+                    var mouse = { x: -1000, y: -1000 };
+                    
+                    function resize() {
+                        var banner = document.getElementById('banner');
+                        canvas.width = banner.offsetWidth;
+                        canvas.height = banner.offsetHeight;
+                    }
+                    resize();
+                    window.addEventListener('resize', resize);
+                    
+                    canvas.parentElement.addEventListener('mousemove', function(e) {
+                        var rect = canvas.getBoundingClientRect();
+                        mouse.x = e.clientX - rect.left;
+                        mouse.y = e.clientY - rect.top;
+                    });
+                    canvas.parentElement.addEventListener('mouseleave', function() {
+                        mouse.x = -1000;
+                        mouse.y = -1000;
+                    });
+                    
+                    // Distribute particles on a grid with jitter for uniform coverage
+                    var cols = Math.ceil(Math.sqrt(numParticles * (canvas.width / canvas.height)));
+                    var rows = Math.ceil(numParticles / cols);
+                    var cellW = canvas.width / cols;
+                    var cellH = canvas.height / rows;
+                    var count = 0;
+                    for (var row = 0; row < rows && count < numParticles; row++) {
+                        for (var col = 0; col < cols && count < numParticles; col++) {
+                            particles.push({
+                                x: (col + 0.2 + Math.random() * 0.6) * cellW,
+                                y: (row + 0.2 + Math.random() * 0.6) * cellH,
+                                vx: (Math.random() - 0.5) * 0.05,
+                                vy: (Math.random() - 0.5) * 0.05,
+                                r: Math.random() * 1.5 + 0.5
+                            });
+                            count++;
+                        }
+                    }
+                    
+                    function animate() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        
+                        for (var i = 0; i < particles.length; i++) {
+                            var p = particles[i];
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            
+                            // Draw dot
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                            ctx.fillStyle = 'rgba(201, 184, 97, 0.4)';
+                            ctx.fill();
+                            
+                            // Connect to nearby particles
+                            for (var j = i + 1; j < particles.length; j++) {
+                                var p2 = particles[j];
+                                var dx = p.x - p2.x;
+                                var dy = p.y - p2.y;
+                                var dist = Math.sqrt(dx * dx + dy * dy);
+                                if (dist < connectionDist) {
+                                    ctx.beginPath();
+                                    ctx.moveTo(p.x, p.y);
+                                    ctx.lineTo(p2.x, p2.y);
+                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.12 * (1 - dist / connectionDist)) + ')';
+                                    ctx.lineWidth = 0.5;
+                                    ctx.stroke();
+                                }
+                            }
+                            
+                            // Mouse interaction: connect to mouse & gently repel
+                            var mdx = p.x - mouse.x;
+                            var mdy = p.y - mouse.y;
+                            var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                            if (mDist < 180) {
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(mouse.x, mouse.y);
+                                ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.25 * (1 - mDist / 180)) + ')';
+                                ctx.lineWidth = 0.8;
+                                ctx.stroke();
+                                // Gentle push
+                                var force = (180 - mDist) / 180 * 0.02;
+                                p.vx += (mdx / mDist) * force;
+                                p.vy += (mdy / mDist) * force;
+                            }
+                            
+                            // Clamp velocity
+                            var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                            if (speed > 0.15) {
+                                p.vx = (p.vx / speed) * 0.15;
+                                p.vy = (p.vy / speed) * 0.15;
+                            }
+                        }
+                        requestAnimationFrame(animate);
+                    }
+                    animate();
+                    
+                    // After 20s, activate glow on goto-next and attract particles to it
+                    var arrowBtn = document.querySelector('#banner .goto-next');
+                    var arrowActive = false;
+                    var arrowPos = { x: 0, y: 0 };
+                    
+                    function updateArrowPos() {
+                        if (!arrowBtn) return;
+                        var bRect = canvas.getBoundingClientRect();
+                        var aRect = arrowBtn.getBoundingClientRect();
+                        arrowPos.x = (aRect.left + aRect.width / 2) - bRect.left;
+                        arrowPos.y = (aRect.top + aRect.height / 2) - bRect.top;
+                    }
+                    
+                    setTimeout(function() {
+                        if (!arrowBtn) return;
+                        arrowBtn.classList.add('glowing');
+                        arrowActive = true;
+                        updateArrowPos();
+                    }, 20000);
+                    
+                    window.addEventListener('resize', updateArrowPos);
+                    window.addEventListener('scroll', updateArrowPos);
+                    
+                    // Draw particle connections to the arrow after glow activates
+                    (function arrowLoop() {
+                        if (arrowActive) {
+                            updateArrowPos();
+                            for (var i = 0; i < particles.length; i++) {
+                                var p = particles[i];
+                                var adx = p.x - arrowPos.x;
+                                var ady = p.y - arrowPos.y;
+                                var aDist = Math.sqrt(adx * adx + ady * ady);
+                                if (aDist < 250) {
+                                    ctx.beginPath();
+                                    ctx.moveTo(p.x, p.y);
+                                    ctx.lineTo(arrowPos.x, arrowPos.y);
+                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.2 * (1 - aDist / 250)) + ')';
+                                    ctx.lineWidth = 0.6;
+                                    ctx.stroke();
+                                    // Gentle pull toward arrow
+                                    var aForce = (250 - aDist) / 250 * 0.008;
+                                    p.vx -= (adx / aDist) * aForce;
+                                    p.vy -= (ady / aDist) * aForce;
+                                }
+                            }
+                        }
+                        requestAnimationFrame(arrowLoop);
+                    })();
+                })();
+                
+                // ===== 3D TILT ON PROFILE IMAGE =====
+                (function() {
+                    var wrap = document.querySelector('.tilt-wrap');
+                    if (!wrap) return;
+                    var img = wrap.querySelector('img');
+                    
+                    wrap.addEventListener('mousemove', function(e) {
+                        var rect = wrap.getBoundingClientRect();
+                        var x = (e.clientX - rect.left) / rect.width;
+                        var y = (e.clientY - rect.top) / rect.height;
+                        var rotateY = (x - 0.5) * 8;  // -4 to 4 deg
+                        var rotateX = (0.5 - y) * 8;
+                        img.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.01)';
+                    });
+                    
+                    wrap.addEventListener('mouseleave', function() {
+                        img.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+                    });
+                })();
+                
+                // ===== 3D TILT ON CARDS =====
+                (function() {
+                    var cards = document.querySelectorAll('.apple-card');
+                    cards.forEach(function(card) {
+                        var shine = card.querySelector('.card-shine');
+                        
+                        card.addEventListener('mousemove', function(e) {
+                            var rect = card.getBoundingClientRect();
+                            var x = (e.clientX - rect.left) / rect.width;
+                            var y = (e.clientY - rect.top) / rect.height;
+                            var rotateY = (x - 0.5) * 5;
+                            var rotateX = (0.5 - y) * 5;
+                            
+                            // Tilt the entire card
+                            card.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.01)';
+                            
+                            // Move shine to follow cursor
+                            if (shine) {
+                                shine.style.background = 'radial-gradient(circle at ' + (x * 100) + '% ' + (y * 100) + '%, rgba(255,255,255,0.06), transparent 60%)';
+                            }
+                        });
+                        
+                        card.addEventListener('mouseleave', function() {
+                            card.style.transform = '';
+                            if (shine) shine.style.opacity = '0';
+                        });
+                        
+                        card.addEventListener('mouseenter', function() {
+                            if (shine) shine.style.opacity = '1';
+                        });
+                    });
+                })();
+                
+                // ===== FLOATING BOKEH PARTICLES =====
+                (function() {
+                    var canvas = document.getElementById('bokeh-canvas');
+                    if (!canvas) return;
+                    var ctx = canvas.getContext('2d');
+                    var misc = document.getElementById('misc');
+                    var bokehParticles = [];
+                    var numBokeh = 35;
+                    
+                    function resizeBokeh() {
+                        canvas.width = misc.offsetWidth;
+                        canvas.height = misc.offsetHeight;
+                    }
+                    resizeBokeh();
+                    window.addEventListener('resize', resizeBokeh);
+                    
+                    for (var i = 0; i < numBokeh; i++) {
+                        bokehParticles.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            r: Math.random() * 60 + 20,
+                            vx: (Math.random() - 0.5) * 0.05,
+                            vy: (Math.random() - 0.5) * 0.05,
+                            opacity: Math.random() * 0.04 + 0.015,
+                            phase: Math.random() * Math.PI * 2
+                        });
+                    }
+                    
+                    function animateBokeh() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var time = Date.now() * 0.001;
+                        
+                        for (var i = 0; i < bokehParticles.length; i++) {
+                            var b = bokehParticles[i];
+                            b.x += b.vx;
+                            b.y += b.vy;
+                            if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
+                            if (b.y < 0 || b.y > canvas.height) b.vy *= -1;
+                            
+                            // Pulsing opacity
+                            var pulse = b.opacity + Math.sin(time * 0.8 + b.phase) * 0.015;
+                            
+                            ctx.beginPath();
+                            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                            var grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+                            grad.addColorStop(0, 'rgba(201, 184, 97, ' + (pulse * 1.0) + ')');
+                            grad.addColorStop(0.3, 'rgba(201, 184, 97, ' + (pulse * 0.4) + ')');
+                            grad.addColorStop(0.7, 'rgba(201, 184, 97, ' + (pulse * 0.1) + ')');
+                            grad.addColorStop(1, 'rgba(201, 184, 97, 0)');
+                            ctx.fillStyle = grad;
+                            ctx.fill();
+                        }
+                        requestAnimationFrame(animateBokeh);
+                    }
+                    animateBokeh();
+                })();
+                
+                // ===== FOOTER CONSTELLATION PARTICLES =====
+                (function() {
+                    var canvas = document.getElementById('footer-particle-canvas');
+                    if (!canvas) return;
+                    var ctx = canvas.getContext('2d');
+                    var footer = document.getElementById('footer');
+                    var particles = [];
+                    var numParticles = 40;
+                    var connectionDist = 220;
+                    var mouse = { x: -1000, y: -1000 };
+                    
+                    function resize() {
+                        canvas.width = footer.offsetWidth;
+                        canvas.height = footer.offsetHeight;
+                    }
+                    resize();
+                    window.addEventListener('resize', resize);
+                    
+                    footer.addEventListener('mousemove', function(e) {
+                        var rect = canvas.getBoundingClientRect();
+                        mouse.x = e.clientX - rect.left;
+                        mouse.y = e.clientY - rect.top;
+                    });
+                    footer.addEventListener('mouseleave', function() {
+                        mouse.x = -1000;
+                        mouse.y = -1000;
+                    });
+                    
+                    // Grid-based uniform distribution
+                    var cols = Math.ceil(Math.sqrt(numParticles * (canvas.width / (canvas.height || 1))));
+                    var rows = Math.ceil(numParticles / cols);
+                    var cellW = canvas.width / cols;
+                    var cellH = canvas.height / rows;
+                    var count = 0;
+                    for (var row = 0; row < rows && count < numParticles; row++) {
+                        for (var col = 0; col < cols && count < numParticles; col++) {
+                            particles.push({
+                                x: (col + 0.2 + Math.random() * 0.6) * cellW,
+                                y: (row + 0.2 + Math.random() * 0.6) * cellH,
+                                vx: (Math.random() - 0.5) * 0.05,
+                                vy: (Math.random() - 0.5) * 0.05,
+                                r: Math.random() * 1.5 + 0.5
+                            });
+                            count++;
+                        }
+                    }
+                    
+                    function animateFooter() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        
+                        for (var i = 0; i < particles.length; i++) {
+                            var p = particles[i];
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                            
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                            ctx.fillStyle = 'rgba(201, 184, 97, 0.4)';
+                            ctx.fill();
+                            
+                            for (var j = i + 1; j < particles.length; j++) {
+                                var p2 = particles[j];
+                                var dx = p.x - p2.x;
+                                var dy = p.y - p2.y;
+                                var dist = Math.sqrt(dx * dx + dy * dy);
+                                if (dist < connectionDist) {
+                                    ctx.beginPath();
+                                    ctx.moveTo(p.x, p.y);
+                                    ctx.lineTo(p2.x, p2.y);
+                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.12 * (1 - dist / connectionDist)) + ')';
+                                    ctx.lineWidth = 0.5;
+                                    ctx.stroke();
+                                }
+                            }
+                            
+                            var mdx = p.x - mouse.x;
+                            var mdy = p.y - mouse.y;
+                            var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                            if (mDist < 180) {
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(mouse.x, mouse.y);
+                                ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.25 * (1 - mDist / 180)) + ')';
+                                ctx.lineWidth = 0.8;
+                                ctx.stroke();
+                                var force = (180 - mDist) / 180 * 0.02;
+                                p.vx += (mdx / mDist) * force;
+                                p.vy += (mdy / mDist) * force;
+                            }
+                            
+                            var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                            if (speed > 0.15) {
+                                p.vx = (p.vx / speed) * 0.15;
+                                p.vy = (p.vy / speed) * 0.15;
+                            }
+                        }
+                        requestAnimationFrame(animateFooter);
+                    }
+                    animateFooter();
+                })();
             });
         </script>
 	</body>
