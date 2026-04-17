@@ -667,7 +667,8 @@
                     if (!canvas) return;
                     var ctx = canvas.getContext('2d');
                     var particles = [];
-                    var numParticles = 60;
+                    var screenScale = Math.min(1, (window.innerWidth * window.innerHeight) / (1920 * 1080));
+                    var numParticles = Math.max(10, Math.round(60 * screenScale));
                     var connectionDist = 320;
                     var mouse = { x: -1000, y: -1000 };
                     
@@ -903,7 +904,8 @@
                     var ctx = canvas.getContext('2d');
                     var misc = document.getElementById('misc');
                     var bokehParticles = [];
-                    var numBokeh = 35;
+                    var bokehScale = Math.min(1, (window.innerWidth * window.innerHeight) / (1920 * 1080));
+                    var numBokeh = Math.max(8, Math.round(35 * bokehScale));
                     
                     function resizeBokeh() {
                         canvas.width = misc.offsetWidth;
@@ -1005,7 +1007,8 @@
                     var ctx = canvas.getContext('2d');
                     var footer = document.getElementById('footer');
                     var particles = [];
-                    var numParticles = 20;
+                    var footerScale = Math.min(1, (window.innerWidth * window.innerHeight) / (1920 * 1080));
+                    var numParticles = Math.max(6, Math.round(20 * footerScale));
                     var connectionDist = 220;
                     var mouse = { x: -1000, y: -1000 };
                     
