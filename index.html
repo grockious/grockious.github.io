@@ -34,9 +34,7 @@
                 <br>
                     <div class="row fade-in">
                         <div class="col-4 col-12-xsmall" style="text-align: center;">
-                            <div class="tilt-wrap">
                             <img src="images/profile_pic.jpg" alt="Hosein Hasanbeig" style='height: 85%; width: 85%; object-fit: contain; border-radius: 12px;' />
-                            </div>
                         </div>
                         <div class="col-8 col-12-xsmall">
                             <p style="text-align: left;"><strong>Short Bio:</strong></p>
@@ -59,7 +57,6 @@
 
 			<!-- Misc -->
 			<div id="misc" class="wrapper style1">
-				<canvas id="bokeh-canvas"></canvas>
 				<div class="container">
 					<header class="major fade-in">
 						<h2>Beyond Work</h2>
@@ -105,7 +102,6 @@
 
 			<!-- Footer -->
 				<footer id="footer">
-					<canvas id="footer-particle-canvas"></canvas>
 					<ul class="copyright">
 						<li>Copyright &copy; Hosein Hasanbeig, <script>new Date().getFullYear()>2017&&document.write(new Date().getFullYear());</script></li>
 					</ul>
@@ -461,19 +457,7 @@
                 z-index: 2;
             }
             
-            /* 3D tilt on profile image */
-            .tilt-wrap {
-                display: inline-block;
-                perspective: 800px;
-                cursor: default;
-            }
-            .tilt-wrap img {
-                transition: transform 0.15s ease-out, box-shadow 0.3s ease;
-                will-change: transform;
-            }
-            .tilt-wrap:hover img {
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(201, 184, 97, 0.15);
-            }
+
             
             /* 3D tilt on cards */
             .apple-card {
@@ -522,44 +506,9 @@
                 z-index: 3;
             }
             
-            /* Bokeh canvas */
-            #misc {
-                position: relative;
-                overflow: hidden;
-            }
-            #bokeh-canvas {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 0;
-                pointer-events: none;
-            }
-            #misc .container {
-                position: relative;
-                z-index: 1;
-            }
+
             
-            /* Footer particle canvas */
-            #footer {
-                position: relative;
-                overflow: hidden;
-            }
-            #footer-particle-canvas {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 0;
-                pointer-events: none;
-            }
-            #footer .copyright,
-            #footer .visitor-map {
-                position: relative;
-                z-index: 1;
-            }
+
             .x-logo svg {
                 width: 1.45em;
                 height: 1.45em;
@@ -705,7 +654,8 @@
                     for (var a = 0; a < anchors.length; a++) {
                         particles.push({
                             x: anchors[a].x, y: anchors[a].y,
-                            vx: 0, vy: 0, r: 1.2, fixed: true
+                            vx: 0, vy: 0, r: 1.2, fixed: true,
+                            phase: Math.random() * Math.PI * 2
                         });
                     }
                     
@@ -722,14 +672,17 @@
                                 y: (row + 0.2 + Math.random() * 0.6) * cellH,
                                 vx: (Math.random() - 0.5) * 0.05,
                                 vy: (Math.random() - 0.5) * 0.05,
-                                r: Math.random() * 1.5 + 0.5
+                                r: Math.random() * 1.5 + 0.5,
+                                phase: Math.random() * Math.PI * 2
                             });
                             count++;
                         }
                     }
                     
+                    var time = 0;
                     function animate() {
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        time += 0.016;
                         
                         for (var i = 0; i < particles.length; i++) {
                             var p = particles[i];
@@ -740,10 +693,11 @@
                                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
                             }
                             
-                            // Draw dot
+                            // Draw dot with twinkle
+                            var twinkle = 0.25 + 0.35 * ((Math.sin(time * 0.6 + p.phase) + 1) / 2);
                             ctx.beginPath();
                             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                            ctx.fillStyle = 'rgba(201, 184, 97, 0.4)';
+                            ctx.fillStyle = 'rgba(201, 184, 97, ' + twinkle + ')';
                             ctx.fill();
                             
                             // Connect to nearby particles
@@ -844,25 +798,7 @@
                     })();
                 })();
                 
-                // ===== 3D TILT ON PROFILE IMAGE =====
-                (function() {
-                    var wrap = document.querySelector('.tilt-wrap');
-                    if (!wrap) return;
-                    var img = wrap.querySelector('img');
-                    
-                    wrap.addEventListener('mousemove', function(e) {
-                        var rect = wrap.getBoundingClientRect();
-                        var x = (e.clientX - rect.left) / rect.width;
-                        var y = (e.clientY - rect.top) / rect.height;
-                        var rotateY = (x - 0.5) * 8;  // -4 to 4 deg
-                        var rotateX = (0.5 - y) * 8;
-                        img.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.01)';
-                    });
-                    
-                    wrap.addEventListener('mouseleave', function() {
-                        img.style.transform = 'rotateX(0) rotateY(0) scale(1)';
-                    });
-                })();
+
                 
                 // ===== 3D TILT ON CARDS =====
                 (function() {
@@ -897,237 +833,9 @@
                     });
                 })();
                 
-                // ===== FLOATING BOKEH PARTICLES =====
-                (function() {
-                    var canvas = document.getElementById('bokeh-canvas');
-                    if (!canvas) return;
-                    var ctx = canvas.getContext('2d');
-                    var misc = document.getElementById('misc');
-                    var bokehParticles = [];
-                    var bokehScale = Math.min(1, (window.innerWidth * window.innerHeight) / (1920 * 1080));
-                    var numBokeh = Math.max(8, Math.round(35 * bokehScale));
-                    
-                    function resizeBokeh() {
-                        canvas.width = misc.offsetWidth;
-                        canvas.height = misc.offsetHeight;
-                    }
-                    resizeBokeh();
-                    window.addEventListener('resize', resizeBokeh);
-                    
-                    // Fixed anchor bokeh at corners and midpoints
-                    var bMargin = 30;
-                    var bokehAnchors = [
-                        {x: bMargin, y: bMargin},
-                        {x: canvas.width - bMargin, y: bMargin},
-                        {x: bMargin, y: canvas.height - bMargin},
-                        {x: canvas.width - bMargin, y: canvas.height - bMargin},
-                        {x: canvas.width / 2, y: bMargin},
-                        {x: canvas.width / 2, y: canvas.height - bMargin},
-                        {x: bMargin, y: canvas.height / 2},
-                        {x: canvas.width - bMargin, y: canvas.height / 2}
-                    ];
-                    for (var a = 0; a < bokehAnchors.length; a++) {
-                        bokehParticles.push({
-                            x: bokehAnchors[a].x, y: bokehAnchors[a].y,
-                            r: 30, vx: 0, vy: 0,
-                            opacity: 0.03, phase: Math.random() * Math.PI * 2, fixed: true
-                        });
-                    }
-                    
-                    for (var i = 0; i < numBokeh; i++) {
-                        bokehParticles.push({
-                            x: Math.random() * canvas.width,
-                            y: Math.random() * canvas.height,
-                            r: Math.random() * 60 + 20,
-                            vx: (Math.random() - 0.5) * 0.05,
-                            vy: (Math.random() - 0.5) * 0.05,
-                            opacity: Math.random() * 0.04 + 0.015,
-                            phase: Math.random() * Math.PI * 2
-                        });
-                    }
-                    
-                    var bokehConnectionDist = 200;
-                    
-                    function animateBokeh() {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        var time = Date.now() * 0.001;
-                        
-                        for (var i = 0; i < bokehParticles.length; i++) {
-                            var b = bokehParticles[i];
-                            if (!b.fixed) {
-                                b.x += b.vx;
-                                b.y += b.vy;
-                                if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
-                                if (b.y < 0 || b.y > canvas.height) b.vy *= -1;
-                            }
-                            
-                            // Bokeh connecting lines (blurred)
-                            ctx.save();
-                            ctx.filter = 'blur(4px)';
-                            for (var j = i + 1; j < bokehParticles.length; j++) {
-                                var b2 = bokehParticles[j];
-                                var dx = b.x - b2.x;
-                                var dy = b.y - b2.y;
-                                var dist = Math.sqrt(dx * dx + dy * dy);
-                                if (dist < bokehConnectionDist) {
-                                    var avgPulse = (b.opacity + b2.opacity) / 2 + Math.sin(time * 0.8 + (b.phase + b2.phase) / 2) * 0.015;
-                                    var lineAlpha = avgPulse * (1 - dist / bokehConnectionDist) * 0.8;
-                                    ctx.beginPath();
-                                    ctx.moveTo(b.x, b.y);
-                                    ctx.lineTo(b2.x, b2.y);
-                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + lineAlpha + ')';
-                                    ctx.lineWidth = 3;
-                                    ctx.stroke();
-                                }
-                            }
-                            ctx.restore();
-                            
-                            // Pulsing opacity
-                            var pulse = b.opacity + Math.sin(time * 0.8 + b.phase) * 0.015;
-                            
-                            ctx.beginPath();
-                            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-                            var grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-                            grad.addColorStop(0, 'rgba(201, 184, 97, ' + (pulse * 1.0) + ')');
-                            grad.addColorStop(0.3, 'rgba(201, 184, 97, ' + (pulse * 0.4) + ')');
-                            grad.addColorStop(0.7, 'rgba(201, 184, 97, ' + (pulse * 0.1) + ')');
-                            grad.addColorStop(1, 'rgba(201, 184, 97, 0)');
-                            ctx.fillStyle = grad;
-                            ctx.fill();
-                        }
-                        requestAnimationFrame(animateBokeh);
-                    }
-                    animateBokeh();
-                })();
+
                 
-                // ===== FOOTER CONSTELLATION PARTICLES =====
-                (function() {
-                    var canvas = document.getElementById('footer-particle-canvas');
-                    if (!canvas) return;
-                    var ctx = canvas.getContext('2d');
-                    var footer = document.getElementById('footer');
-                    var particles = [];
-                    var footerScale = Math.min(1, (window.innerWidth * window.innerHeight) / (1920 * 1080));
-                    var numParticles = Math.max(6, Math.round(20 * footerScale));
-                    var connectionDist = 220;
-                    var mouse = { x: -1000, y: -1000 };
-                    
-                    function resize() {
-                        canvas.width = footer.offsetWidth;
-                        canvas.height = footer.offsetHeight;
-                    }
-                    resize();
-                    window.addEventListener('resize', resize);
-                    
-                    footer.addEventListener('mousemove', function(e) {
-                        var rect = canvas.getBoundingClientRect();
-                        mouse.x = e.clientX - rect.left;
-                        mouse.y = e.clientY - rect.top;
-                    });
-                    footer.addEventListener('mouseleave', function() {
-                        mouse.x = -1000;
-                        mouse.y = -1000;
-                    });
-                    
-                    // Fixed anchor particles at corners and midpoints
-                    var fMargin = 10;
-                    var fAnchors = [
-                        {x: fMargin, y: fMargin},
-                        {x: canvas.width - fMargin, y: fMargin},
-                        {x: fMargin, y: canvas.height - fMargin},
-                        {x: canvas.width - fMargin, y: canvas.height - fMargin},
-                        {x: canvas.width / 2, y: fMargin},
-                        {x: canvas.width / 2, y: canvas.height - fMargin},
-                        {x: fMargin, y: canvas.height / 2},
-                        {x: canvas.width - fMargin, y: canvas.height / 2}
-                    ];
-                    for (var a = 0; a < fAnchors.length; a++) {
-                        particles.push({
-                            x: fAnchors[a].x, y: fAnchors[a].y,
-                            vx: 0, vy: 0, r: 1.2, fixed: true
-                        });
-                    }
-                    
-                    // Grid-based uniform distribution
-                    var cols = Math.ceil(Math.sqrt(numParticles * (canvas.width / (canvas.height || 1))));
-                    var rows = Math.ceil(numParticles / cols);
-                    var cellW = canvas.width / cols;
-                    var cellH = canvas.height / rows;
-                    var count = 0;
-                    for (var row = 0; row < rows && count < numParticles; row++) {
-                        for (var col = 0; col < cols && count < numParticles; col++) {
-                            particles.push({
-                                x: (col + 0.2 + Math.random() * 0.6) * cellW,
-                                y: (row + 0.2 + Math.random() * 0.6) * cellH,
-                                vx: (Math.random() - 0.5) * 0.05,
-                                vy: (Math.random() - 0.5) * 0.05,
-                                r: Math.random() * 1.5 + 0.5
-                            });
-                            count++;
-                        }
-                    }
-                    
-                    function animateFooter() {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        
-                        for (var i = 0; i < particles.length; i++) {
-                            var p = particles[i];
-                            if (!p.fixed) {
-                                p.x += p.vx;
-                                p.y += p.vy;
-                                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                            }
-                            
-                            ctx.beginPath();
-                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                            ctx.fillStyle = 'rgba(201, 184, 97, 0.4)';
-                            ctx.fill();
-                            
-                            for (var j = i + 1; j < particles.length; j++) {
-                                var p2 = particles[j];
-                                var dx = p.x - p2.x;
-                                var dy = p.y - p2.y;
-                                var dist = Math.sqrt(dx * dx + dy * dy);
-                                if (dist < connectionDist) {
-                                    ctx.beginPath();
-                                    ctx.moveTo(p.x, p.y);
-                                    ctx.lineTo(p2.x, p2.y);
-                                    ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.12 * (1 - dist / connectionDist)) + ')';
-                                    ctx.lineWidth = 0.5;
-                                    ctx.stroke();
-                                }
-                            }
-                            
-                            var mdx = p.x - mouse.x;
-                            var mdy = p.y - mouse.y;
-                            var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-                            if (mDist < 180) {
-                                ctx.beginPath();
-                                ctx.moveTo(p.x, p.y);
-                                ctx.lineTo(mouse.x, mouse.y);
-                                ctx.strokeStyle = 'rgba(201, 184, 97, ' + (0.25 * (1 - mDist / 180)) + ')';
-                                ctx.lineWidth = 0.8;
-                                ctx.stroke();
-                                if (!p.fixed) {
-                                    var force = (180 - mDist) / 180 * 0.02;
-                                    p.vx += (mdx / mDist) * force;
-                                    p.vy += (mdy / mDist) * force;
-                                }
-                            }
-                            
-                            if (!p.fixed) {
-                                var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                                if (speed > 0.15) {
-                                    p.vx = (p.vx / speed) * 0.15;
-                                    p.vy = (p.vy / speed) * 0.15;
-                                }
-                            }
-                        }
-                        requestAnimationFrame(animateFooter);
-                    }
-                    animateFooter();
-                })();
+
             });
         </script>
 	</body>
